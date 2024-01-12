@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import useIsMobile from "../Hooks/useIsMobile";
 import {
+  Box,
   Button,
   Card,
   CardContent,
@@ -15,9 +16,22 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 const Rsvp = () => {
   const isMobile = useIsMobile();
   const [expanded, setExpanded] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   return (
     <>
+      {loading && (
+        <Box
+          display="flex"
+          width="100%"
+          zIndex={2}
+          justifyContent="center"
+          alignItems={isMobile ? "start" : "center"}
+          mt={3}
+        >
+          <Typography sx={{ color: "#fff" }}>Form is loading...</Typography>
+        </Box>
+      )}
       <iframe
         src="https://docs.google.com/forms/d/e/1FAIpQLSeTsCRYgx_r3cyuH-bv4_vCDabWc-qYo383winNUxr0BleEzQ/viewform?embedded=true"
         width="100%"
@@ -28,8 +42,11 @@ const Rsvp = () => {
           border: "none",
         }}
         title="rsvp-form"
+        onLoad={() => setLoading(false)}
       >
-        <Typography sx={{ color: "#fff" }}>Loading…</Typography>
+        <Typography sx={{ color: "#fff", fontSize: "1000px" }}>
+          Loading…
+        </Typography>
       </iframe>
       <Card
         sx={{
