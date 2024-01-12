@@ -4,6 +4,7 @@ import Layout from "./Components/Layout";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Rsvp from "./Components/Rsvp";
 import SignIn from "./Components/SignIn";
+import Venue from "./Components/Venue";
 
 const routes = [
   {
@@ -31,7 +32,7 @@ const routes = [
         path: "/venue",
         element: (
           <Layout header>
-            <Home />
+            <Venue />
           </Layout>
         ),
         errorElement: <ErrorPage />,
