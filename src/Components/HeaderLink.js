@@ -5,11 +5,12 @@ import { Link as RouterLink } from "react-router-dom";
 const Link = styled(RouterLink)`
   text-decoration: none;
   color: ${({ $isMobile }) => ($isMobile ? "#333" : "#fff")};
-  margin-left: ${({ $isMobile }) => !$isMobile && "1rem"};
+  margin-left: ${({ $isMobile, $hasMargin }) =>
+    !$isMobile && $hasMargin && "1rem"};
 `;
 
-const HeaderLink = ({ isMobile, ...props }) => (
-  <Link {...props} $isMobile={isMobile} />
+const HeaderLink = ({ isMobile, hasMargin, ...props }) => (
+  <Link {...props} $isMobile={isMobile} $hasMargin={hasMargin} />
 );
 
 export default HeaderLink;

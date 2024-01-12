@@ -1,6 +1,7 @@
 import React from "react";
 import useIsMobile from "../Hooks/useIsMobile";
 import { getHeaderHeight } from "../utils/helpers";
+import { Typography } from "@mui/material";
 
 const Rsvp = () => {
   const isMobile = useIsMobile();
@@ -8,12 +9,17 @@ const Rsvp = () => {
 
   return (
     <iframe
-      src="https://docs.google.com/forms/d/e/1FAIpQLSdYNyn6TdJLJuAfnTbHHXtz9us070ntEJYD94Spl-fQvLI7Ug/viewform?embedded=true"
+      src="https://docs.google.com/forms/d/e/1FAIpQLSeTsCRYgx_r3cyuH-bv4_vCDabWc-qYo383winNUxr0BleEzQ/viewform?embedded=true"
       width="100%"
-      style={{ minHeight: `calc(100vh - ${headerHeight})` }}
+      style={{
+        minHeight: `calc(100vh - ${headerHeight})`,
+        paddingTop: "25px",
+        zIndex: 2,
+        border: "none",
+      }}
       title="rsvp-form"
     >
-      Loading…
+      <Typography sx={{ color: "#fff" }}>Loading…</Typography>
     </iframe>
   );
 };

@@ -9,14 +9,15 @@ const theme = createTheme({
       contrastText: "#fff",
     },
     secondary: {
-      main: "#9a573e",
-      light: "#c48872",
-      dark: "#7c402e",
+      main: "#9FC9D8",
+      light: "#d8e9ef",
+      dark: "#5ca6c0",
       contrastText: "#fff",
     },
   },
   typography: {
-    fontFamily: `"Open Sans", sans-serif`,
+    fontFamily: `"Montserrat", sans-serif`,
+    fontWeightRegular: 300,
   },
 });
 

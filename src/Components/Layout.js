@@ -12,6 +12,7 @@ import {
   Toolbar,
   Typography,
   ListItemText,
+  Button,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
@@ -21,6 +22,7 @@ import { Link } from "react-router-dom";
 import HeaderLink from "./HeaderLink";
 import useIsMobile from "../Hooks/useIsMobile";
 import { getHeaderHeight } from "../utils/helpers";
+import styalOutside from "../images/styal-outside.jpg";
 
 const drawerWidth = 240;
 
@@ -29,7 +31,7 @@ const pages = [
   { label: "Accommodation", path: "/accommodation" },
 ];
 
-const Layout = ({ children }) => {
+const Layout = ({ children, header }) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -37,7 +39,7 @@ const Layout = ({ children }) => {
   };
 
   const isMobile = useIsMobile();
-  const headerHeight = getHeaderHeight(isMobile);
+  const headerHeight = header ? getHeaderHeight(isMobile) : "0px";
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
@@ -71,61 +73,106 @@ const Layout = ({ children }) => {
   );
 
   return (
-    <Box sx={{ display: "flex", height: "100%", minHeight: "100vh" }}>
+    <Box
+      sx={{
+        display: "flex",
+        minHeight: "100vh",
+        backgroundColor: "rgba(0,0,0,0.7)",
+      }}
+    >
       <CssBaseline />
-      <AppBar component="nav">
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{
-              flexGrow: 1,
-              display: { xs: "none", sm: "block" },
-              alignItems: "center",
-            }}
-          >
-            <Link to="/" style={{ display: "flex", alignItems: "center" }}>
-              <img src={whiteLogo} alt="Wedding rings" width="50px" />
-            </Link>
-          </Typography>
-          <Box display="flex" sx={{ display: { xs: "none", sm: "block" } }}>
-            {pages.map(({ label, path }) => (
-              <HeaderLink key={label} to={path}>
-                {label}
-              </HeaderLink>
-            ))}
-          </Box>
-        </Toolbar>
-      </AppBar>
-      <nav>
-        <Drawer
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: "block", sm: "none" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: drawerWidth,
-            },
-          }}
-        >
-          {drawer}
-        </Drawer>
-      </nav>
-      <Box component="main" sx={{ width: "100%", mt: headerHeight }}>
+      {header && (
+        <>
+          <AppBar component="nav">
+            <Toolbar>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{ mr: 2, display: { sm: "none" } }}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Typography
+                variant="h6"
+                component="div"
+                sx={{
+                  flexGrow: 1,
+                  display: { xs: "none", sm: "flex" },
+                  alignItems: "center",
+                }}
+              >
+                <Link to="/" style={{ display: "flex", alignItems: "center" }}>
+                  <img src={whiteLogo} alt="Wedding rings" width="50px" />
+                </Link>
+              </Typography>
+              <Box
+                alignItems="center"
+                sx={{ display: { xs: "none", sm: "flex" } }}
+              >
+                <Button variant="contained" color="secondary">
+                  <HeaderLink to="/rsvp" sx={{ ml: 0 }}>
+                    R.S.V.P
+                  </HeaderLink>
+                </Button>
+                {pages.map(({ label, path }) => (
+                  <HeaderLink key={label} to={path} hasMargin>
+                    {label}
+                  </HeaderLink>
+                ))}
+              </Box>
+            </Toolbar>
+          </AppBar>
+          <nav>
+            <Drawer
+              variant="temporary"
+              open={mobileOpen}
+              onClose={handleDrawerToggle}
+              ModalProps={{
+                keepMounted: true, // Better open performance on mobile.
+              }}
+              sx={{
+                display: { xs: "block", sm: "none" },
+                "& .MuiDrawer-paper": {
+                  boxSizing: "border-box",
+                  width: drawerWidth,
+                },
+              }}
+            >
+              {drawer}
+            </Drawer>
+          </nav>
+        </>
+      )}
+      <Box
+        display="flex"
+        alignItems="center"
+        width="100%"
+        height={`calc(100vh - ${headerHeight})`}
+        flexDirection="column"
+        sx={{
+          backgroundImage: `url(${styalOutside})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          width: "100%",
+          height: `calc(100vh - ${headerHeight})`,
+          position: "relative",
+        }}
+        zIndex="0"
+        mt={headerHeight}
+      >
+        <Box
+          display="flex"
+          width="100%"
+          position="absolute"
+          top="0"
+          left="0"
+          bgcolor="rgba(0,0,0,0.7)"
+          height={`calc(100vh - ${headerHeight})`}
+          zIndex="1"
+        />
         {children}
       </Box>
     </Box>
