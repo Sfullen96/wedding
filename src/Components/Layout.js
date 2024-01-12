@@ -159,6 +159,7 @@ const Layout = ({ children, header }) => {
           width: "100%",
           minHeight: `calc(100vh - ${headerHeight})`,
           position: "relative",
+          paddingBottom: 3,
         }}
         zIndex="0"
         mt={headerHeight}
@@ -170,7 +171,7 @@ const Layout = ({ children, header }) => {
           top="0"
           left="0"
           bgcolor="rgba(0,0,0,0.7)"
-          minHeight="100vh"
+          minHeight="100%"
           zIndex="1"
         />
         {children}
