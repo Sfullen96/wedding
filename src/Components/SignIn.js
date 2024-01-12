@@ -28,8 +28,9 @@ const SignIn = () => {
       display="flex"
       width="100%"
       zIndex={2}
-      alignItems="center"
       justifyContent="center"
+      alignItems={isMobile ? "start" : "center"}
+      mt={isMobile ? 3 : 0}
       height="100vh"
     >
       <Card sx={{ width: isMobile ? "95%" : "40%" }}>
