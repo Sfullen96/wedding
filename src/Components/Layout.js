@@ -149,7 +149,7 @@ const Layout = ({ children, header }) => {
         display="flex"
         alignItems="center"
         width="100%"
-        height={`calc(100vh - ${headerHeight})`}
+        minHeight={`calc(100vh - ${headerHeight})`}
         flexDirection="column"
         sx={{
           backgroundImage: `url(${styalOutside})`,
@@ -157,7 +157,7 @@ const Layout = ({ children, header }) => {
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
           width: "100%",
-          height: `calc(100vh - ${headerHeight})`,
+          minHeight: `calc(100vh - ${headerHeight})`,
           position: "relative",
         }}
         zIndex="0"
@@ -170,7 +170,7 @@ const Layout = ({ children, header }) => {
           top="0"
           left="0"
           bgcolor="rgba(0,0,0,0.7)"
-          height={`calc(100vh - ${headerHeight})`}
+          minHeight="100vh"
           zIndex="1"
         />
         {children}

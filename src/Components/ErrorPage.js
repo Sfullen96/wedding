@@ -7,7 +7,7 @@ const ErrorPage = () => (
     display="flex"
     alignItems="center"
     justifyContent="center"
-    height="100vh"
+    minHeight="100vh"
     flexDirection="column"
   >
     <Typography variant="h4" sx={{ mb: 3 }}>

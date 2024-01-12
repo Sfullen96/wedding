@@ -6,10 +6,11 @@ import {
   CardHeader,
   Grid,
   TextField,
+  Typography,
 } from "@mui/material";
 import React, { useState } from "react";
 import useIsMobile from "../Hooks/useIsMobile";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
   const isMobile = useIsMobile();
@@ -31,12 +32,24 @@ const SignIn = () => {
       justifyContent="center"
       alignItems={isMobile ? "start" : "center"}
       mt={isMobile ? 3 : 0}
-      height="100vh"
+      minHeight="100vh"
     >
       <Card sx={{ width: isMobile ? "95%" : "40%" }}>
         <CardHeader
           title="Please enter your 4 digit code to access"
-          subheader="This can be found on your invitation"
+          subheader={
+            <Typography variant="caption">
+              This can be found on your invitation. Any issues accessing, please
+              email{" "}
+              <Link
+                to="mailto:samandleanne24@gmail.com"
+                target="_blank"
+                rel="noreferer"
+              >
+                samandleanne24@gmail.com
+              </Link>
+            </Typography>
+          }
         />
         <CardContent>
           <form
