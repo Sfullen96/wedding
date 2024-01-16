@@ -153,13 +153,14 @@ const Layout = ({ children, header }) => {
         flexDirection="column"
         sx={{
           backgroundImage: `url(${styalOutside})`,
-          backgroundSize: "cover",
+          backgroundSize: "100% 100%;",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
           width: "100%",
           minHeight: `calc(100vh - ${headerHeight})`,
           position: "relative",
           paddingBottom: 3,
+          backgroundAttachment: "fixed",
         }}
         zIndex="0"
         mt={headerHeight}
@@ -170,7 +171,7 @@ const Layout = ({ children, header }) => {
           position="absolute"
           top="0"
           left="0"
-          bgcolor="rgba(0,0,0,0.7)"
+          bgcolor="rgba(255,255,255,0.4)"
           minHeight="100%"
           zIndex="1"
         />

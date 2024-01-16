@@ -1,3 +1,4 @@
+import Accommodation from "./Components/Accommodation";
 import ErrorPage from "./Components/ErrorPage";
 import Home from "./Components/Home";
 import Layout from "./Components/Layout";
@@ -41,7 +42,7 @@ const routes = [
         path: "/accommodation",
         element: (
           <Layout header>
-            <Home />
+            <Accommodation />
           </Layout>
         ),
         errorElement: <ErrorPage />,

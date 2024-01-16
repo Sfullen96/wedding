@@ -3,18 +3,25 @@ import {
   Card,
   CardContent,
   CardHeader,
-  Divider,
   Tab,
-  Tabs,
+  Tabs as MuiTabs,
   Typography,
   useTheme,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from "@mui/material";
 import DirectionsTransitIcon from "@mui/icons-material/DirectionsTransit";
 import NorthIcon from "@mui/icons-material/North";
 import SouthIcon from "@mui/icons-material/South";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import React from "react";
-import useIsMobile from "../Hooks/useIsMobile";
+import { Link } from "react-router-dom";
+import styled from "@emotion/styled";
+import PublicTransport from "./PublicTransport";
+import South from "./South";
+import North from "./North";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -42,22 +49,66 @@ function a11yProps(index) {
   };
 }
 
+const Container = styled(Box)`
+  ${({ theme }) => `${theme.breakpoints.between("xs", "md")} {
+    width: 95%;
+  }`}
+  ${({ theme }) => `${theme.breakpoints.between("md", "lg")} {
+    width: 70%;
+  }`}
+  ${({ theme }) => `${theme.breakpoints.up("xl")} {
+    width: 50%;
+  }`}
+`;
+
+const Tabs = styled(MuiTabs)`
+  ${({ theme }) => `${theme.breakpoints.between("xs", "sm")} {
+  display: none;
+}`}
+  ${({ theme }) => `${theme.breakpoints.between("sm", "xl")} {
+  display: flex;
+}`}
+`;
+
+const AccordionContainer = styled(Box)`
+  width: 100%;
+  flex-direction: column;
+  ${({ theme }) => `${theme.breakpoints.between("xs", "sm")} {
+  display: flex;
+}`}
+  ${({ theme }) => `${theme.breakpoints.between("sm", "xl")} {
+  display: none;
+}`}
+`;
+
+const TabsContainer = styled(Box)`
+  ${({ theme }) => `${theme.breakpoints.between("xs", "sm")} {
+  display: none;
+}`}
+  ${({ theme }) => `${theme.breakpoints.between("sm", "xl")} {
+  display: flex;
+}`}
+`;
+
 const Venue = () => {
-  const isMobile = useIsMobile();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
+  const [expanded, setExpanded] = React.useState("panel1");
+  const handleAccordionChange = (panel) => (event, newExpanded) => {
+    setExpanded(newExpanded ? panel : false);
+  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   return (
-    <Box
+    <Container
       zIndex="4"
       display="flex"
       alignItems="center"
       flexDirection="column"
-      width={isMobile ? "90%" : "80%"}
+      // width={isMobile ? "90%" : "65%"}
       textAlign="center"
       pt={5}
     >
@@ -75,11 +126,16 @@ const Venue = () => {
               Styal Lodge
             </Typography>
           }
+          subheader={
+            <Link to="https://styallodge.co.uk" target="_blank">
+              styallodge.co.uk
+            </Link>
+          }
         />
         <CardContent>
           <iframe
             width="100%"
-            height="450"
+            height="250px"
             style={{ border: 0, zIndex: 3 }}
             loading="lazy"
             allowfullscreen
@@ -114,7 +170,7 @@ const Venue = () => {
             <Tabs
               value={value}
               onChange={handleChange}
-              aria-label="basic tabs example"
+              aria-label="directions tabs"
               textColor="primary"
               indicatorColor="primary"
             >
@@ -147,70 +203,67 @@ const Venue = () => {
               />
             </Tabs>
           </Box>
-          <CustomTabPanel value={value} index={0}>
-            <Typography variant="h6">From the North</Typography>
-
-            <ol>
-              <li>Take the M60 motorway towards Stockport.</li>
-              <li>At junction 3, take the A34 exit towards Cheadle.</li>
-              <li>Continue on the A34 for approximately 4 miles.</li>
-              <li>Turn left onto Finney Lane.</li>
-              <li>After approximately 1 mile, turn right onto Styal Road.</li>
-              <li>
-                After approximately 1.5 miles, turn left onto Station Road.
-              </li>
-              <li>Styal Lodge will be on your left.</li>
-            </ol>
-            <Typography>
-              Please ensure you park in the Styal Lodge carpark, not the golf
-              course.
-            </Typography>
-          </CustomTabPanel>
-          <CustomTabPanel value={value} index={1}>
-            <Typography variant="h6">From the South</Typography>
-            <ol>
-              <li>Take the M6 motorway towards Manchester.</li>
-              <li>
-                At junction 19, take the A556 exit towards Manchester Airport.
-              </li>
-              <li>Continue on the A556 for approximately 5 miles.</li>
-              <li>
-                At the roundabout, take the 2nd exit onto the M56 ramp to
-                Chester.
-              </li>
-              <li>Merge onto the M56.</li>
-              <li>At junction 6, take the A538 exit towards Wilmslow.</li>
-              <li>Continue on the A538 for approximately 3 miles.</li>
-              <li>Turn right onto Station Road.</li>
-              <li>Styal Lodge will be on your right.</li>
-            </ol>
-            <Typography>
-              Please ensure you park in the Styal Lodge carpark, not the golf
-              course.
-            </Typography>
-          </CustomTabPanel>
-          <CustomTabPanel value={value} index={2}>
-            <Typography variant="h6">Public transport</Typography>
-            <ol>
-              <li>Take a train to Wilmslow station.</li>
-              <li>From Wilmslow you can take a train to Styal station.</li>
-              <li>From Styal station it is around a 15-20 minute walk.</li>
-            </ol>
-            <Divider />
-            <ol>
-              <li>
-                Alternatively, you can get the Metrolink to Manchester Airport
-              </li>
-              <li>Take a taxi to Styal Lodge.</li>
-            </ol>
-
-            <Typography>
-              For Taxis, use Uber or Street Cars (0161 228 7878)
-            </Typography>
-          </CustomTabPanel>
+          <AccordionContainer>
+            <Accordion
+              expanded={expanded === "panel1"}
+              onChange={handleAccordionChange("panel1")}
+            >
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1-content"
+                id="panel1-header"
+              >
+                From the North
+              </AccordionSummary>
+              <AccordionDetails>
+                <North />
+              </AccordionDetails>
+            </Accordion>
+            <Accordion
+              expanded={expanded === "panel2"}
+              onChange={handleAccordionChange("panel2")}
+            >
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel2-content"
+                id="panel2-header"
+              >
+                From the South
+              </AccordionSummary>
+              <AccordionDetails>
+                <South />
+              </AccordionDetails>
+            </Accordion>
+            <Accordion
+              expanded={expanded === "panel3"}
+              onChange={handleAccordionChange("panel3")}
+            >
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel3-content"
+                id="panel3-header"
+              >
+                Public Transport
+              </AccordionSummary>
+              <AccordionDetails>
+                <PublicTransport />
+              </AccordionDetails>
+            </Accordion>
+          </AccordionContainer>
+          <TabsContainer>
+            <CustomTabPanel value={value} index={0}>
+              <North />
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={1}>
+              <South />
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={2}>
+              <PublicTransport />
+            </CustomTabPanel>
+          </TabsContainer>
         </CardContent>
       </Card>
-    </Box>
+    </Container>
   );
 };
 

@@ -11,6 +11,7 @@ import {
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import useIsMobile from "../Hooks/useIsMobile";
 import { Link } from "react-router-dom";
+import { grey } from "@mui/material/colors";
 
 const Home = () => {
   const isMobile = useIsMobile();
@@ -26,7 +27,7 @@ const Home = () => {
       textAlign="center"
       pt={5}
     >
-      <Card sx={{ p: isMobile ? 0 : 5, bgcolor: "#e2e2e2" }}>
+      <Card sx={{ p: isMobile ? 0 : 5, bgcolor: grey[200] }}>
         <CardContent>
           <Typography
             gutterBottom
