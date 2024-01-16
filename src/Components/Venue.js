@@ -22,6 +22,7 @@ import styled from "@emotion/styled";
 import PublicTransport from "./PublicTransport";
 import South from "./South";
 import North from "./North";
+import { grey } from "@mui/material/colors";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -113,7 +114,7 @@ const Venue = () => {
       pt={5}
     >
       <Card
-        sx={{ p: 0, bgcolor: "#e2e2e2", width: "100%", textAlign: "left" }}
+        sx={{ p: 0, bgcolor: grey[200], width: "100%", textAlign: "left" }}
         fullWidth
       >
         <CardHeader
@@ -147,7 +148,7 @@ const Venue = () => {
       <Card
         sx={{
           p: 0,
-          bgcolor: "#e2e2e2",
+          bgcolor: grey[200],
           width: "100%",
           mt: 4,
           textAlign: "left",

@@ -1,5 +1,6 @@
 import { Divider, Typography } from "@mui/material";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const PublicTransport = () => (
   <>
@@ -15,7 +16,17 @@ const PublicTransport = () => (
       <li>Take a taxi to Styal Lodge.</li>
     </ol>
 
-    <Typography>For Taxis, use Uber or Street Cars (0161 228 7878)</Typography>
+    <Typography>
+      For Taxis, we recommend Uber or{" "}
+      <Link to="https://streetcarsmanchester.co.uk/" target="_blank">
+        Street Cars
+      </Link>{" "}
+      (
+      <Link target="_blank" to="tel:0161 228 7878">
+        0161 228 7878
+      </Link>
+      )
+    </Typography>
   </>
 );
 
