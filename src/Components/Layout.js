@@ -108,6 +108,18 @@ const Layout = ({ children, header }) => {
                 </Link>
               </Typography>
               <Box
+                sx={{ display: { xs: "flex", sm: "none" } }}
+                width="100%"
+                justifyContent="end"
+              >
+                <Button variant="contained" color="secondary">
+                  <HeaderLink to="/rsvp" sx={{ ml: 0 }}>
+                    R.S.V.P
+                  </HeaderLink>
+                </Button>
+              </Box>
+
+              <Box
                 alignItems="center"
                 sx={{ display: { xs: "none", sm: "flex" } }}
               >
@@ -163,6 +175,7 @@ const Layout = ({ children, header }) => {
           backgroundAttachment: "fixed",
         }}
         zIndex="0"
+        pt={5}
         mt={headerHeight}
       >
         <Box

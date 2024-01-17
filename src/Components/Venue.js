@@ -1,7 +1,5 @@
 import {
   Box,
-  Card,
-  CardContent,
   CardHeader,
   Tab,
   Tabs as MuiTabs,
@@ -23,6 +21,8 @@ import PublicTransport from "./PublicTransport";
 import South from "./South";
 import North from "./North";
 import { grey } from "@mui/material/colors";
+import Card from "./Card";
+import CardContent from "./CardContent";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -50,18 +50,6 @@ function a11yProps(index) {
   };
 }
 
-const Container = styled(Box)`
-  ${({ theme }) => `${theme.breakpoints.between("xs", "md")} {
-    width: 95%;
-  }`}
-  ${({ theme }) => `${theme.breakpoints.between("md", "lg")} {
-    width: 70%;
-  }`}
-  ${({ theme }) => `${theme.breakpoints.up("xl")} {
-    width: 50%;
-  }`}
-`;
-
 const Tabs = styled(MuiTabs)`
   ${({ theme }) => `${theme.breakpoints.between("xs", "sm")} {
   display: none;
@@ -77,7 +65,7 @@ const AccordionContainer = styled(Box)`
   ${({ theme }) => `${theme.breakpoints.between("xs", "sm")} {
   display: flex;
 }`}
-  ${({ theme }) => `${theme.breakpoints.between("sm", "xl")} {
+  ${({ theme }) => `${theme.breakpoints.up("sm")} {
   display: none;
 }`}
 `;
@@ -94,7 +82,7 @@ const TabsContainer = styled(Box)`
 const Venue = () => {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
-  const [expanded, setExpanded] = React.useState("panel1");
+  const [expanded, setExpanded] = React.useState();
   const handleAccordionChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
@@ -104,15 +92,7 @@ const Venue = () => {
   };
 
   return (
-    <Container
-      zIndex="4"
-      display="flex"
-      alignItems="center"
-      flexDirection="column"
-      // width={isMobile ? "90%" : "65%"}
-      textAlign="center"
-      pt={5}
-    >
+    <>
       <Card
         sx={{ p: 0, bgcolor: grey[200], width: "100%", textAlign: "left" }}
         fullWidth
@@ -133,7 +113,7 @@ const Venue = () => {
             </Link>
           }
         />
-        <CardContent>
+        <CardContent sx={{ width: "100%" }}>
           <iframe
             width="100%"
             height="250px"
@@ -264,7 +244,7 @@ const Venue = () => {
           </TabsContainer>
         </CardContent>
       </Card>
-    </Container>
+    </>
   );
 };
 

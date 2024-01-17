@@ -31,6 +31,11 @@ const Accommodation = () => {
             </Typography>
           }
         />
+        {/* <iframe
+          src="https://www.google.com/maps/d/u/0/embed?mid=1GPsEmHfkP4RhIypP_zXbf75W0l0lEp8&ehbc=2E312F&noprof=1"
+          width="640"
+          height="480"
+        ></iframe> */}
         <CardContent>
           <Typography>
             There is no accommodation on-site at Styal Lodge. However, it is

@@ -15,6 +15,12 @@ const theme = createTheme({
       extraDark: "#005d95",
       contrastText: "#fff",
     },
+    grey: {
+      main: "#545454",
+    },
+    silver: {
+      main: "#A6A6A6",
+    },
   },
   typography: {
     fontFamily: `"Montserrat", sans-serif`,
