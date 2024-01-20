@@ -7,7 +7,7 @@ import flowers1 from "../images/flowers1.png";
 import flower3 from "../images/flower3.png";
 
 const FlowersOne = styled("img")`
-  opacity: 0.1;
+  opacity: 0.3;
   position: absolute;
   top: 10px;
   left: 10px;
@@ -21,7 +21,7 @@ const FlowersOne = styled("img")`
   }`}
 `;
 const FlowersTwo = styled("img")`
-  opacity: 0.2;
+  opacity: 0.5;
   position: absolute;
   bottom: 10px;
   right: 10px;
@@ -71,11 +71,15 @@ const Container = styled(Box)`
   }`}
 `;
 
-const Card = ({ children, align = "start", ...props }) => (
+const Card = ({ children, align = "start", showFlowers = false, ...props }) => (
   <Container>
     <StyledCard {...props}>
-      <FlowersOne src={flower3} alt="background flowers" />
-      <FlowersTwo src={flowers1} alt="background flowers alternative" />
+      {showFlowers && (
+        <>
+          <FlowersOne src={flower3} alt="background flowers" />
+          <FlowersTwo src={flowers1} alt="background flowers alternative" />
+        </>
+      )}
 
       <div
         style={{

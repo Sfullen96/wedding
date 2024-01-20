@@ -11,6 +11,8 @@ import useIsMobile from "../Hooks/useIsMobile";
 import Card from "./Card";
 import CardContent from "./CardContent";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { accommodation } from "../utils/helpers";
+import { Link } from "react-router-dom";
 
 const Accommodation = () => {
   const isMobile = useIsMobile();
@@ -62,37 +64,64 @@ const Accommodation = () => {
       </Card>
       <Card sx={{ p: 0, width: "100%", textAlign: "left", mt: 3 }} fullWidth>
         <CardContent>
-          {/* {accommodation.map} */}
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1-content"
-              id="panel1-header"
-            >
-              From the North
-            </AccordionSummary>
-            <AccordionDetails></AccordionDetails>
-          </Accordion>
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel2-content"
-              id="panel2-header"
-            >
-              From the South
-            </AccordionSummary>
-            <AccordionDetails></AccordionDetails>
-          </Accordion>
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel3-content"
-              id="panel3-header"
-            >
-              Public Transport
-            </AccordionSummary>
-            <AccordionDetails></AccordionDetails>
-          </Accordion>
+          {accommodation.map(
+            (
+              {
+                name,
+                website,
+                phone,
+                distance,
+                description,
+                rates,
+                additionalInfo,
+              },
+              index
+            ) => (
+              <Accordion>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls={`panel${index + 1}-content`}
+                  id={`panel${index + 1}-header`}
+                >
+                  <Box sx={{ display: "flex", flexDirection: "column" }}>
+                    <Typography variant="h6" color="primary">
+                      {name}
+                    </Typography>
+                    <Typography variant="body1" color="secondary">
+                      {distance} from Styal Lodge
+                    </Typography>
+                  </Box>
+                </AccordionSummary>
+                <AccordionDetails
+                  sx={{ display: "flex", flexDirection: "column" }}
+                >
+                  <Link to={website} target="_blank">
+                    {website}
+                  </Link>
+                  <Link to={`tel:${phone}`} target="_blank">
+                    {phone}
+                  </Link>
+                  <Typography sx={{ my: 3 }} variant="body1">
+                    {description}
+                  </Typography>
+                  {rates.map(({ label, price }) => (
+                    <Typography gutterBottom variant="body1">
+                      <strong>{label}</strong>: {price}
+                    </Typography>
+                  ))}
+
+                  <Typography variant="body1" sx={{ mt: 3 }}>
+                    Additional info:
+                  </Typography>
+                  <ul style={{ marginTop: 0 }}>
+                    {additionalInfo.map((info) => (
+                      <li>{info}</li>
+                    ))}
+                  </ul>
+                </AccordionDetails>
+              </Accordion>
+            )
+          )}
         </CardContent>
       </Card>
     </Box>

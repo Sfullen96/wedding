@@ -34,7 +34,7 @@ const Home = () => {
   const theme = useTheme();
 
   return (
-    <Card align="center">
+    <Card align="center" showFlowers>
       <CardContent>
         <Typography
           gutterBottom
@@ -77,16 +77,18 @@ const Home = () => {
         </Typography>
 
         <Typography
-          variant="h2"
-          sx={{ textAlign: "center", mt: 1, fontWeight: 400 }}
-          gutterBottom
+          variant="h5"
+          sx={{
+            textAlign: "center",
+            mt: 3,
+            fontWeight: 400,
+            color: theme.palette.grey.main,
+          }}
         >
-          <span style={{ color: theme.palette.grey.main }}>21</span>{" "}
-          <span style={{ color: theme.palette.silver.main }}>08</span>{" "}
-          <span style={{ color: theme.palette.grey.main }}>24</span>
+          Wednesday 21st August 2024
         </Typography>
         <Typography
-          variant={isMobile ? "body1" : "h4"}
+          variant={isMobile ? "body1" : "h5"}
           sx={{
             color: theme.palette.grey.main,
             textAlign: "center",
@@ -97,39 +99,21 @@ const Home = () => {
         </Typography>
         <Typography
           variant={isMobile ? "body1" : "h6"}
-          sx={{ color: theme.palette.grey.main, textAlign: "center" }}
+          sx={{
+            color: theme.palette.grey.main,
+            textAlign: "center",
+            fontWeight: 400,
+            mb: 3,
+          }}
         >
           Station Road, Styal, Wilmslow SK9 4JN
         </Typography>
-
-        {/* <Typography
-            gutterBottom
-            variant="h5"
-            color="primary"
-            sx={{ fontWeight: 400, color: theme.palette.grey.main, mt: 2 }}
-          >
-            Wednesday 21st August 2024
-          </Typography>
-          <Typography
-            variant={isMobile ? "body1" : "h6"}
-            gutterBottom
-            sx={{ color: theme.palette.grey.main }}
-          >
-            Styal Lodge
-          </Typography>
-          <Typography
-            variant={isMobile ? "body1" : "h6"}
-            sx={{ color: theme.palette.grey.main }}
-          >
-            Station Road, Styal, Wilmslow SK9 4JN
-          </Typography> */}
 
         <Button
           variant="contained"
           size="large"
           color="primary"
-          fullWidth
-          sx={{ mt: 3 }}
+          sx={{ mt: 3, px: 4 }}
         >
           <Link
             to="/rsvp"
@@ -139,7 +123,6 @@ const Home = () => {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              width: "100%",
               textAlign: "center",
             }}
           >
