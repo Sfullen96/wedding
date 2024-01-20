@@ -29,7 +29,9 @@ const Rsvp = () => {
           alignItems={isMobile ? "start" : "center"}
           mt={3}
         >
-          <Typography sx={{ color: "#fff" }}>Form is loading...</Typography>
+          <Typography variant="h6" sx={{ color: "#333" }}>
+            Form is loading, please wait...
+          </Typography>
         </Box>
       )}
       <iframe

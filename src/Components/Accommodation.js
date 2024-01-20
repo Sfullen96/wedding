@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Accordion,
   AccordionDetails,
@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 
 const Accommodation = () => {
   const isMobile = useIsMobile();
+  const [loading, setLoading] = useState(true);
 
   return (
     <Box
@@ -50,14 +51,33 @@ const Accommodation = () => {
             a pin to see more information. Alternatively you can scroll down to
             see a list.
           </Typography>
+          {loading && (
+            <Box
+              display="flex"
+              width="100%"
+              zIndex={2}
+              justifyContent="center"
+              alignItems={isMobile ? "start" : "center"}
+              mt={3}
+            >
+              <Typography variant="body1" sx={{ color: "#333" }}>
+                Map is loading, please wait...
+              </Typography>
+            </Box>
+          )}
           <iframe
             src="https://www.google.com/maps/d/u/0/embed?mid=1GPsEmHfkP4RhIypP_zXbf75W0l0lEp8&ehbc=2E312F&noprof=1"
             width="100%"
             height="350px"
-            style={{ border: 0, zIndex: 3 }}
+            style={{
+              zIndex: 3,
+              border: "1px solid rgba(0,0,0,0.2)",
+              borderRadius: "6px",
+            }}
             loading="lazy"
             allowfullscreen
             title="Styal Lodge accommodation"
+            onLoad={() => setLoading(false)}
           />
         </CardContent>
       </Card>

@@ -14,7 +14,7 @@ import NorthIcon from "@mui/icons-material/North";
 import SouthIcon from "@mui/icons-material/South";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
 import PublicTransport from "./PublicTransport";
@@ -86,6 +86,7 @@ const Venue = () => {
   const handleAccordionChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
+  const [loading, setLoading] = useState(true);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -114,14 +115,32 @@ const Venue = () => {
           }
         />
         <CardContent sx={{ width: "100%" }}>
+          {loading && (
+            <Box
+              display="flex"
+              width="100%"
+              zIndex={2}
+              justifyContent="center"
+              mt={3}
+            >
+              <Typography variant="body1" sx={{ color: "#333" }}>
+                Map is loading, please wait...
+              </Typography>
+            </Box>
+          )}
           <iframe
             width="100%"
             height="250px"
-            style={{ border: 0, zIndex: 3 }}
+            style={{
+              zIndex: 3,
+              border: "1px solid rgba(0,0,0,0.2)",
+              borderRadius: "6px",
+            }}
             loading="lazy"
             allowfullscreen
             src="https://www.google.com/maps/embed/v1/place?q=Styal%20Lodge%20Weddings%2C%20Station%20Road%2C%20Styal%2C%20Wilmslow%2C%20UK&key=AIzaSyB9321fOzXWmr1N79_LgegqU9p49knNVq4"
             title="Styal Lodge"
+            onLoad={() => setLoading(false)}
           />
         </CardContent>
       </Card>
