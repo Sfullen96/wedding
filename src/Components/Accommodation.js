@@ -25,7 +25,6 @@ const Accommodation = () => {
       flexDirection="column"
       width={isMobile ? "90%" : "80%"}
       textAlign="center"
-      pt={5}
     >
       <Card sx={{ p: 0, width: "100%", textAlign: "left" }} fullWidth>
         <CardHeader
