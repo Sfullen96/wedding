@@ -35,11 +35,7 @@ function CustomTabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
     </div>
   );
 }
@@ -137,7 +133,7 @@ const Venue = () => {
               borderRadius: "6px",
             }}
             loading="lazy"
-            allowfullscreen
+            allowFullScreen
             src="https://www.google.com/maps/embed/v1/place?q=Styal%20Lodge%20Weddings%2C%20Station%20Road%2C%20Styal%2C%20Wilmslow%2C%20UK&key=AIzaSyB9321fOzXWmr1N79_LgegqU9p49knNVq4"
             title="Styal Lodge"
             onLoad={() => setLoading(false)}

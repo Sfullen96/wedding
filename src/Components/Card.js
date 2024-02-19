@@ -35,7 +35,9 @@ const FlowersTwo = styled("img")`
   }`}
 `;
 
-const StyledCard = styled(MuiCard)`
+const StyledCard = styled(MuiCard, {
+  shouldForwardProp: (prop) => prop !== "fullWidth",
+})`
   background-color: ${grey[200]};
   width: 100%;
   display: flex;

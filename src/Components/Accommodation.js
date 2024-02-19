@@ -24,7 +24,7 @@ const Accommodation = () => {
       display="flex"
       alignItems="center"
       flexDirection="column"
-      width={isMobile ? "90%" : "80%"}
+      width={isMobile ? "100%" : "80%"}
       textAlign="center"
     >
       <Card sx={{ p: 0, width: "100%", textAlign: "left" }} fullWidth>
@@ -75,7 +75,7 @@ const Accommodation = () => {
               borderRadius: "6px",
             }}
             loading="lazy"
-            allowfullscreen
+            allowFullScreen
             title="Styal Lodge accommodation"
             onLoad={() => setLoading(false)}
           />
@@ -96,7 +96,7 @@ const Accommodation = () => {
               },
               index
             ) => (
-              <Accordion>
+              <Accordion key={name}>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls={`panel${index + 1}-content`}
@@ -124,7 +124,11 @@ const Accommodation = () => {
                     {description}
                   </Typography>
                   {rates.map(({ label, price }) => (
-                    <Typography gutterBottom variant="body1">
+                    <Typography
+                      gutterBottom
+                      variant="body1"
+                      key={`${label}-${price}`}
+                    >
                       <strong>{label}</strong>: {price}
                     </Typography>
                   ))}
@@ -134,7 +138,7 @@ const Accommodation = () => {
                   </Typography>
                   <ul style={{ marginTop: 0 }}>
                     {additionalInfo.map((info) => (
-                      <li>{info}</li>
+                      <li key={info}>{info}</li>
                     ))}
                   </ul>
                 </AccordionDetails>

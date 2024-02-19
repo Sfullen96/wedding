@@ -24,7 +24,10 @@ const SignIn = () => {
     return navigate("/");
   }
 
-  // TODO: Add cut off date for needing code, open after 20th at start of day
+  if (new Date() > new Date("2024-08-20")) {
+    localStorage.setItem("authenticated", 1);
+    navigate("/");
+  }
 
   return (
     <Box
@@ -57,7 +60,6 @@ const SignIn = () => {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              console.log("Here", process.env.REACT_APP_ACCESS_CODE, value);
 
               if (value !== process.env.REACT_APP_ACCESS_CODE) {
                 setError("Incorrect code");
@@ -72,6 +74,7 @@ const SignIn = () => {
             <Grid container spacing={2}>
               <Grid item xs={12} md={9}>
                 <TextField
+                  autoFocus
                   name="access-code"
                   fullWidth
                   placeholder="Access code"
