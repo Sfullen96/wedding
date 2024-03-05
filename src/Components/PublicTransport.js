@@ -17,7 +17,7 @@ const PublicTransport = () => (
     </ol>
 
     <Typography>
-      For Taxis, the venuee recommend{" "}
+      For Taxis, the venue recommend{" "}
       <Link to="https://www.lynxtaxis.co.uk/" target="_blank">
         Lynx Taxis
       </Link>{" "}

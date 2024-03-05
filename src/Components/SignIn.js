@@ -8,7 +8,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useIsMobile from "../Hooks/useIsMobile";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -20,14 +20,16 @@ const SignIn = () => {
 
   const isAuthenticated = Boolean(localStorage.getItem("authenticated"));
 
-  if (isAuthenticated) {
-    return navigate("/");
-  }
+  useEffect(() => {
+    if (isAuthenticated) {
+      return navigate("/");
+    }
 
-  if (new Date() > new Date("2024-08-20")) {
-    localStorage.setItem("authenticated", 1);
-    navigate("/");
-  }
+    if (new Date() > new Date("2024-08-20")) {
+      localStorage.setItem("authenticated", 1);
+      navigate("/");
+    }
+  }, [isAuthenticated, navigate]);
 
   return (
     <Box
