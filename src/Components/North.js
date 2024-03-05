@@ -1,8 +1,8 @@
 import { Typography } from "@mui/material";
 import React from "react";
 
-const North = () => (
-  <>
+const North = React.forwardRef((props, ref) => (
+  <div ref={ref}>
     <Typography variant="h6">From the North</Typography>
 
     <ol>
@@ -24,7 +24,7 @@ const North = () => (
     <Typography>
       Please ensure you park in the Styal Lodge carpark, not the golf course.
     </Typography>
-  </>
-);
+  </div>
+));
 
 export default North;

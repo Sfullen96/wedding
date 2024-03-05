@@ -51,7 +51,7 @@ const Home = () => {
             fontWeight: 600,
           }}
         >
-          Sam Fullen
+          Samuel Thomas Fullen
         </Typography>
         <Typography
           variant={isMobile ? "h5" : "h4"}
@@ -73,11 +73,11 @@ const Home = () => {
             fontWeight: 600,
           }}
         >
-          Leanne Gough
+          Leanne Marie Gough
         </Typography>
 
         <Typography
-          variant="h5"
+          variant="h6"
           sx={{
             textAlign: "center",
             mt: 3,
@@ -88,7 +88,7 @@ const Home = () => {
           Wednesday 21st August 2024
         </Typography>
         <Typography
-          variant={isMobile ? "body1" : "h5"}
+          variant={isMobile ? "body1" : "h6"}
           sx={{
             color: theme.palette.grey.main,
             textAlign: "center",
@@ -107,6 +107,18 @@ const Home = () => {
           }}
         >
           Station Road, Styal, Wilmslow SK9 4JN
+        </Typography>
+
+        <Typography
+          variant={isMobile ? "body1" : "h6"}
+          sx={{
+            color: theme.palette.grey.main,
+            textAlign: "center",
+            fontWeight: 400,
+            mb: 3,
+          }}
+        >
+          Please arrive by 10:40 am
         </Typography>
 
         <Button

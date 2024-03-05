@@ -17,13 +17,13 @@ const PublicTransport = () => (
     </ol>
 
     <Typography>
-      For Taxis, we recommend Uber or{" "}
-      <Link to="https://streetcarsmanchester.co.uk/" target="_blank">
-        Street Cars
+      For Taxis, the venuee recommend{" "}
+      <Link to="https://www.lynxtaxis.co.uk/" target="_blank">
+        Lynx Taxis
       </Link>{" "}
       (
-      <Link target="_blank" to="tel:0161 228 7878">
-        0161 228 7878
+      <Link target="_blank" to="tel:0161 480 5000">
+        0161 480 5000
       </Link>
       )
     </Typography>

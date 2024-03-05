@@ -8,13 +8,17 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  TextField,
+  Button,
 } from "@mui/material";
+import queryString from "query-string";
 import DirectionsTransitIcon from "@mui/icons-material/DirectionsTransit";
 import NorthIcon from "@mui/icons-material/North";
 import SouthIcon from "@mui/icons-material/South";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { useLoadScript } from "@react-google-maps/api";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
 import PublicTransport from "./PublicTransport";
@@ -23,6 +27,9 @@ import North from "./North";
 import { grey } from "@mui/material/colors";
 import Card from "./Card";
 import CardContent from "./CardContent";
+import PrintButton from "./PrintDirections";
+import { useReactToPrint } from "react-to-print";
+import PrintDirections from "./PrintDirections";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -74,20 +81,51 @@ const TabsContainer = styled(Box)`
   display: flex;
 }`}
 `;
+const defaultQs = {
+  q: "place_id:ChIJcVSt6kVNekgRHE3N1a-NwpE",
+};
 
 const Venue = () => {
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_MAPS_KEY,
+    libraries: [],
+  });
+
+  const [mapUrl, setMapUrl] = useState(
+    "https://www.google.com/maps/embed/v1/place"
+  );
+  const [searchValue, setSearchValue] = useState("");
+  const [mapQueryString, setMapQueryString] = useState(defaultQs);
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
   const [expanded, setExpanded] = React.useState();
   const handleAccordionChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
+  const [directions, setDirections] = useState();
   const [loading, setLoading] = useState(true);
+
+  if (!isLoaded) {
+    return null;
+  }
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  const reset = () => {
+    setSearchValue("");
+    setMapUrl("https://www.google.com/maps/embed/v1/place");
+    setMapQueryString({
+      q: "place_id:ChIJcVSt6kVNekgRHE3N1a-NwpE",
+    });
+  };
+  console.log(directions);
   return (
     <>
       <Card
@@ -111,6 +149,98 @@ const Venue = () => {
           }
         />
         <CardContent sx={{ width: "100%" }}>
+          <Typography gutterBottom>
+            Enter your address or postcode below to see and generate printable
+            directions:
+          </Typography>
+          <Box display="flex" flexDirection="row" alignItems="center" mb={2}>
+            <TextField
+              name="address"
+              value={searchValue}
+              label="Address or postcode"
+              onChange={(e) => {
+                setSearchValue(e.target.value);
+
+                if (e.target.value === "") {
+                  reset();
+                }
+              }}
+              size="small"
+              sx={{ mr: 3 }}
+            />
+            <Button
+              sx={{ height: "40px", mr: 1 }}
+              size="small"
+              variant="contained"
+              color="primary"
+              onClick={async () => {
+                const opts = {
+                  origin: searchValue,
+                  destination: { placeId: "ChIJcVSt6kVNekgRHE3N1a-NwpE" },
+                  travelMode: window.google.maps.TravelMode.DRIVING,
+                  unitSystem: window.google.maps.UnitSystem.IMPERIAL,
+                };
+
+                const service = new window.google.maps.DirectionsService();
+
+                const res = await service.route(opts);
+                console.log(res);
+                setDirections(res.routes[0]);
+
+                setMapUrl("https://www.google.com/maps/embed/v1/directions");
+                setMapQueryString({
+                  origin: searchValue,
+                  destination: "place_id:ChIJcVSt6kVNekgRHE3N1a-NwpE",
+                });
+              }}
+              disabled={!searchValue || searchValue === ""}
+            >
+              Search
+            </Button>
+            <Button
+              sx={{ height: "40px" }}
+              size="small"
+              variant="outlined"
+              color="secondary"
+              onClick={reset}
+            >
+              Clear
+            </Button>
+          </Box>
+          {searchValue && directions && (
+            <>
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={async () => {
+                  handlePrint();
+                }}
+                sx={{ mb: 2 }}
+              >
+                Print step-by-step directions
+              </Button>
+              <div style={{ display: "none" }}>
+                <PrintDirections ref={componentRef}>
+                  <Typography variant="body1" sx={{ fontSize: "20px" }}>
+                    {directions?.legs[0].start_address} -{" "}
+                    {directions?.legs[0].end_address}
+                  </Typography>
+                  <Typography variant="body2" sx={{ fontSize: "18px" }}>
+                    {directions?.legs[0].distance.text} | ~
+                    {directions?.legs[0].duration.text}
+                  </Typography>
+                  <ol>
+                    {directions.legs[0].steps.map(({ instructions }) => (
+                      <li
+                        style={{ marginBottom: "8px", fontSize: "18px" }}
+                        dangerouslySetInnerHTML={{ __html: instructions }}
+                      />
+                    ))}
+                  </ol>
+                </PrintDirections>
+              </div>
+            </>
+          )}
           {loading && (
             <Box
               display="flex"
@@ -126,7 +256,7 @@ const Venue = () => {
           )}
           <iframe
             width="100%"
-            height="250px"
+            height="350px"
             style={{
               zIndex: 3,
               border: "1px solid rgba(0,0,0,0.2)",
@@ -134,7 +264,13 @@ const Venue = () => {
             }}
             loading="lazy"
             allowFullScreen
-            src="https://www.google.com/maps/embed/v1/place?q=Styal%20Lodge%20Weddings%2C%20Station%20Road%2C%20Styal%2C%20Wilmslow%2C%20UK&key=AIzaSyB9321fOzXWmr1N79_LgegqU9p49knNVq4"
+            src={`${mapUrl}?${queryString.stringify(
+              {
+                ...mapQueryString,
+                key: process.env.REACT_APP_MAPS_KEY,
+              },
+              { sort: false }
+            )}`}
             title="Styal Lodge"
             onLoad={() => setLoading(false)}
           />
@@ -249,6 +385,7 @@ const Venue = () => {
           <TabsContainer>
             <CustomTabPanel value={value} index={0}>
               <North />
+              <PrintButton Component={North} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
               <South />

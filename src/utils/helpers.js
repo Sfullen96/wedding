@@ -5,7 +5,7 @@ export const accommodation = [
     name: "Stanneylands",
     website: "https://www.stanneylands.co.uk/",
     phone: "01625 525225",
-    distance: "1-2 minutes",
+    distance: "< 5 minute drive",
     description:
       "Recently renovated, beautiful 4* boutique hotel just around the corner, offering a stylish country-house experience. The restaurant serving fantastic seasonal dishes from light lunches to delicious three course feasts.",
     rates: [
