@@ -8,7 +8,7 @@ import {
 import styled from "@emotion/styled";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import useIsMobile from "../Hooks/useIsMobile";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import Card from "./Card";
 
@@ -32,6 +32,7 @@ const CardContent = styled(MuiCardContent)`
 const Home = () => {
   const isMobile = useIsMobile();
   const theme = useTheme();
+  const navigate = useNavigate();
 
   return (
     <Card align="center" showFlowers>
@@ -126,6 +127,7 @@ const Home = () => {
           size="large"
           color="primary"
           sx={{ mt: 3, px: 4 }}
+          onClick={() => navigate("/rsvp")}
         >
           <Link
             to="/rsvp"
