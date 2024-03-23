@@ -6,6 +6,7 @@ import ProtectedRoute from "./Components/ProtectedRoute";
 import Rsvp from "./Components/Rsvp";
 import SignIn from "./Components/SignIn";
 import Venue from "./Components/Venue";
+import ViewRsvps from "./Components/ViewRsvps";
 
 const routes = [
   {
@@ -20,6 +21,15 @@ const routes = [
     path: "/",
     element: <ProtectedRoute />,
     children: [
+      {
+        path: "/admin",
+        element: (
+          <Layout header>
+            <ViewRsvps />
+          </Layout>
+        ),
+        errorElement: <ErrorPage />,
+      },
       {
         path: "/",
         element: (
