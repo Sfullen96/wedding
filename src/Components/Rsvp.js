@@ -34,17 +34,6 @@ const Rsvp = () => {
   const [expanded, setExpanded] = useState(false);
   const [numberOfSections, setNumberOfSections] = useState([1]);
   const [step, setStep] = useState(0);
-  const [initialValues, setInitialValues] = useState({
-    responses: [
-      {
-        firstName: "",
-        lastName: "",
-        ceremony: "",
-        evening: "",
-        dietaryRequirements: [],
-      },
-    ],
-  });
 
   const schema = Yup.object().shape({
     attending: Yup.string().required("This field is required"),
@@ -52,7 +41,12 @@ const Rsvp = () => {
       .typeError("Must be a number")
       .integer("Must be a whole number")
       .min(1, "Must be a minimum of 1")
-      .max(10, "The maximum is 10"),
+      .max(10, "The maximum is 10")
+      .when("attending", {
+        is: "yes", // alternatively: (val) => val == true
+        then: (schema) => schema.required("Number of attendees is required"),
+        otherwise: (schema) => schema,
+      }),
     responses: Yup.array().of(
       Yup.object().shape({
         firstName: Yup.string().required("First name is required"),
@@ -66,7 +60,17 @@ const Rsvp = () => {
 
   const form = useFormik({
     validationSchema: schema,
-    initialValues,
+    initialValues: {
+      responses: [
+        {
+          firstName: "",
+          lastName: "",
+          ceremony: "",
+          evening: "",
+          dietaryRequirements: [],
+        },
+      ],
+    },
     onSubmit: async (values, { setSubmitting }) => {
       if (values?.attending === "no") {
         await fetch(`${process.env.REACT_APP_API_URL}/wedding/rsvp`, {
@@ -118,7 +122,6 @@ const Rsvp = () => {
     setFieldValue,
     handleBlur,
   } = form;
-  console.log("🚀 ~ Rsvp ~ form:", form.initialValues, initialValues);
 
   return (
     <>
@@ -283,7 +286,11 @@ const Rsvp = () => {
                           type="button"
                           variant="contained"
                           color="primary"
-                          disabled={isSubmitting || !values.attending}
+                          disabled={
+                            isSubmitting ||
+                            !values.attending ||
+                            !values.numberOfAttendees
+                          }
                           onClick={() => setStep(1)}
                         >
                           Next <NavigateNextIcon fontSize="small" />
