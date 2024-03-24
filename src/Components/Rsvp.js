@@ -45,7 +45,7 @@ const Rsvp = () => {
       .min(1, "Must be a minimum of 1")
       .max(10, "The maximum is 10")
       .when("attending", {
-        is: "yes", // alternatively: (val) => val == true
+        is: "yes",
         then: (schema) => schema.required("Number of attendees is required"),
         otherwise: (schema) => schema,
       }),
@@ -164,7 +164,7 @@ const Rsvp = () => {
           sx={{
             p: 0,
             height: "100%",
-            width: isMobile ? "100%" : "70%",
+            width: isMobile ? "95%" : "70%",
             textAlign: "left",
             mb: 4,
             maxHeight: "calc(100vh - 200px)",
@@ -290,6 +290,15 @@ const Rsvp = () => {
                               touched.numberOfAttendees &&
                               errors.numberOfAttendees
                             }
+                            onKeyDown={(e) => {
+                              if (
+                                e.key === "Enter" &&
+                                !form.errors.numberOfAttendees
+                              ) {
+                                e.preventDefault();
+                                setStep(1);
+                              }
+                            }}
                             onBlur={handleBlur}
                             label="Number of attendees"
                             size="small"
