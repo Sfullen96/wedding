@@ -18,7 +18,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useFormik } from "formik";
@@ -28,12 +28,14 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import useIsMobile from "../Hooks/useIsMobile";
 import Name from "./Name";
 import DietaryRequirements from "./DietaryRequirements";
+import { toast } from "react-toastify";
 
 const Rsvp = () => {
   const isMobile = useIsMobile();
   const [expanded, setExpanded] = useState(false);
   const [numberOfSections, setNumberOfSections] = useState([1]);
   const [step, setStep] = useState(0);
+  const navigate = useNavigate();
 
   const schema = Yup.object().shape({
     attending: Yup.string().required("This field is required"),
@@ -73,7 +75,7 @@ const Rsvp = () => {
     },
     onSubmit: async (values, { setSubmitting }) => {
       if (values?.attending === "no") {
-        await fetch(`${process.env.REACT_APP_API_URL}/wedding/rsvp`, {
+        const j = await fetch(`${process.env.REACT_APP_API_URL}/wedding/rsvp`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(
@@ -84,8 +86,20 @@ const Rsvp = () => {
             }))
           ),
         });
+        const res = await j.json();
+
+        if (res.success === true) {
+          toast.success(
+            "Your response has been successfully saved, thank you."
+          );
+          navigate("/");
+        } else {
+          toast.error(
+            "There was an issue submitting your response. Please instead email samandleanne24@gmail.com with your details."
+          );
+        }
       } else {
-        await fetch(`${process.env.REACT_APP_API_URL}/wedding/rsvp`, {
+        const j = await fetch(`${process.env.REACT_APP_API_URL}/wedding/rsvp`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(
@@ -96,6 +110,18 @@ const Rsvp = () => {
             }))
           ),
         });
+        const res = await j.json();
+
+        if (res.success === true) {
+          toast.success(
+            "Your response has been successfully saved, thank you."
+          );
+          navigate("/");
+        } else {
+          toast.error(
+            "There was an issue submitting your response. Please instead email samandleanne24@gmail.com with your details."
+          );
+        }
       }
     },
   });

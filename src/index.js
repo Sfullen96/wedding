@@ -7,6 +7,9 @@ import { ThemeProvider } from "@mui/material";
 import theme from "./theme";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import routes from "./routes";
+import { ToastContainer } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.min.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -15,6 +18,7 @@ const router = createBrowserRouter(routes);
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
+      <ToastContainer />
       <RouterProvider router={router} />
     </ThemeProvider>
   </React.StrictMode>
