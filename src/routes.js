@@ -1,5 +1,6 @@
 import Accommodation from "./Components/Accommodation";
 import ErrorPage from "./Components/ErrorPage";
+import FourOhFour from "./Components/FourOhFour";
 import Home from "./Components/Home";
 import Layout from "./Components/Layout";
 import ProtectedRoute from "./Components/ProtectedRoute";
@@ -21,6 +22,7 @@ const routes = [
     path: "/",
     element: <ProtectedRoute />,
     children: [
+      { path: "*", element: <FourOhFour /> },
       {
         path: "/admin",
         element: (

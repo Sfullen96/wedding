@@ -18,7 +18,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 
 import whiteLogo from "../logo.png";
 import blackLogo from "../logo-black.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import HeaderLink from "./HeaderLink";
 import useIsMobile from "../Hooks/useIsMobile";
 import { getHeaderHeight } from "../utils/helpers";
@@ -33,6 +33,8 @@ const pages = [
 
 const Layout = ({ children, header }) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const navigate = useNavigate();
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -112,7 +114,11 @@ const Layout = ({ children, header }) => {
                 width="100%"
                 justifyContent="end"
               >
-                <Button variant="contained" color="secondary">
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => navigate("/rsvp")}
+                >
                   <HeaderLink to="/rsvp" sx={{ ml: 0 }}>
                     R.S.V.P
                   </HeaderLink>
@@ -123,7 +129,11 @@ const Layout = ({ children, header }) => {
                 alignItems="center"
                 sx={{ display: { xs: "none", sm: "flex" } }}
               >
-                <Button variant="contained" color="secondary">
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => navigate("/rsvp")}
+                >
                   <HeaderLink to="/rsvp" sx={{ ml: 0 }}>
                     R.S.V.P
                   </HeaderLink>

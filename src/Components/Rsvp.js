@@ -203,6 +203,10 @@ const Rsvp = () => {
                           name="attending"
                           onChange={(e) => {
                             setFieldValue("attending", e.target.value);
+                            if (e.target.value !== form.values.attending) {
+                              setNumberOfSections([1]);
+                              setFieldValue("numberOfAttendees", "");
+                            }
                           }}
                         >
                           <FormControlLabel
@@ -236,7 +240,10 @@ const Rsvp = () => {
                         </Grid>
                         <Grid item xs={12}>
                           {numberOfSections.map((x, i) => (
-                            <Name form={form} index={i} />
+                            <>
+                              <Name form={form} index={i} />
+                              <Divider sx={{ my: 2 }} />
+                            </>
                           ))}
                           <Button
                             variant="outlined"
@@ -336,6 +343,13 @@ const Rsvp = () => {
                 )}
                 {step === 1 && (
                   <>
+                    <Grid item xs={12}>
+                      <Typography variant="body1" gutterBottom>
+                        <i>
+                          Please only include those named on your invitation.
+                        </i>
+                      </Typography>
+                    </Grid>
                     <Grid item xs={12}>
                       {numberOfSections.map((x, i) => (
                         <>
