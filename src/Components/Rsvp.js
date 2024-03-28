@@ -158,7 +158,7 @@ const Rsvp = () => {
         flexDirection="column"
         width={isMobile ? "100%" : "80%"}
         textAlign="center"
-        overflow="scroll"
+        overflow="auto"
       >
         <Card
           sx={{

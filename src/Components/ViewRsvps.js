@@ -48,7 +48,7 @@ const ViewRsvps = () => {
       flexDirection="column"
       width="100%"
       textAlign="center"
-      overflow="scroll"
+      overflow="auto"
     >
       <Card
         sx={{
