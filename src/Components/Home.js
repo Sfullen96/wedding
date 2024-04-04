@@ -119,7 +119,7 @@ const Home = () => {
             mb: 3,
           }}
         >
-          Please arrive by 10:40 am
+          Please arrive by 11:40 am
         </Typography>
 
         <Button
