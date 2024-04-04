@@ -158,7 +158,7 @@ const Rsvp = () => {
         flexDirection="column"
         width={isMobile ? "100%" : "80%"}
         textAlign="center"
-        overflow="scroll"
+        overflow="auto"
       >
         <Card
           sx={{
@@ -168,7 +168,7 @@ const Rsvp = () => {
             textAlign: "left",
             mb: 4,
             maxHeight: "calc(100vh - 200px)",
-            overflow: "scroll",
+            overflow: "auto",
           }}
           fullWidth
         >
