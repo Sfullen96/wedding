@@ -4,6 +4,8 @@ import {
   Typography,
   useTheme,
   CardContent as MuiCardContent,
+  Grid,
+  Alert,
 } from "@mui/material";
 import styled from "@emotion/styled";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -121,29 +123,60 @@ const Home = () => {
         >
           Please arrive by 11:40 am
         </Typography>
-
-        <Button
-          variant="contained"
-          size="large"
-          color="primary"
-          sx={{ mt: 3, px: 4 }}
-          onClick={() => navigate("/rsvp")}
-        >
-          <Link
-            to="/rsvp"
-            style={{
-              color: "#fff",
-              textDecoration: "none",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              textAlign: "center",
-            }}
-          >
-            R.S.V.P here
-            <ArrowForwardIosIcon fontSize="0.9375rem" sx={{ ml: 1 }} />
-          </Link>
-        </Button>
+        <Alert severity="info">
+          Please note: the venue is <b>card only</b> and does not accept cash.
+        </Alert>
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={6}>
+            <Button
+              variant="contained"
+              size="large"
+              color="secondary"
+              sx={{ mt: 3, px: 4 }}
+              onClick={() => navigate("/venue")}
+              fullWidth
+            >
+              <Link
+                to="/venue"
+                style={{
+                  color: "#333",
+                  textDecoration: "none",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  textAlign: "center",
+                }}
+              >
+                More information
+              </Link>
+            </Button>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Button
+              variant="contained"
+              size="large"
+              color="primary"
+              sx={{ mt: isMobile ? 0 : 3, px: 4 }}
+              onClick={() => navigate("/rsvp")}
+              fullWidth
+            >
+              <Link
+                to="/rsvp"
+                style={{
+                  color: "#fff",
+                  textDecoration: "none",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  textAlign: "center",
+                }}
+              >
+                R.S.V.P here
+                <ArrowForwardIosIcon fontSize="0.9375rem" sx={{ ml: 1 }} />
+              </Link>
+            </Button>
+          </Grid>
+        </Grid>
       </CardContent>
     </Card>
   );

@@ -10,6 +10,7 @@ import {
   AccordionDetails,
   TextField,
   Button,
+  Alert,
 } from "@mui/material";
 import queryString from "query-string";
 import DirectionsTransitIcon from "@mui/icons-material/DirectionsTransit";
@@ -149,6 +150,9 @@ const Venue = () => {
           }
         />
         <CardContent sx={{ width: "100%" }}>
+          <Alert severity="info" sx={{ mb: 2 }}>
+            Please note: the venue is <b>card only</b> and does not accept cash.
+          </Alert>
           <Typography gutterBottom>
             Enter your address or postcode below to see and generate printable
             directions:

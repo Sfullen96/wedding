@@ -5,16 +5,21 @@ import Home from "./Components/Home";
 import Layout from "./Components/Layout";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Rsvp from "./Components/Rsvp";
-import SignIn from "./Components/SignIn";
+// import SignIn from "./Components/SignIn";
 import Venue from "./Components/Venue";
 import ViewRsvps from "./Components/ViewRsvps";
 
 const routes = [
   {
     path: "/sign-in",
+    // element: (
+    //   <Layout header={false}>
+    //     <SignIn />
+    //   </Layout>
+    // ),
     element: (
-      <Layout header={false}>
-        <SignIn />
+      <Layout header>
+        <Home />
       </Layout>
     ),
   },
