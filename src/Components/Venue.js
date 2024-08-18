@@ -301,7 +301,7 @@ const Venue = () => {
                     {route?.legs[0].duration.text}
                   </Typography>
                   <ol>
-                    {directions.legs[0].steps.map(({ instructions }) => (
+                    {route?.legs[0].steps.map(({ instructions }) => (
                       <li
                         style={{ marginBottom: "8px", fontSize: "18px" }}
                         dangerouslySetInnerHTML={{ __html: instructions }}
