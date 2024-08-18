@@ -122,6 +122,7 @@ const Venue = () => {
   const [loading, setLoading] = useState(true);
   const [destination, setDestination] = useState(venueId);
   const [avoidMotorways, setAvoidMotorways] = useState(false);
+  const [route, setRoute] = useState();
 
   if (!isLoaded) {
     return null;
@@ -227,7 +228,8 @@ const Venue = () => {
 
                 const res = await service.route(opts);
                 console.log(res);
-                setDirections(res.routes[0]);
+                setDirections(res.routes);
+                setRoute(res.routes[0]);
 
                 setMapUrl("https://www.google.com/maps/embed/v1/directions");
                 setMapQueryString({
@@ -261,15 +263,42 @@ const Venue = () => {
               >
                 Print step-by-step directions
               </Button>
+
+              {directions.length > 1 && (
+                <FormControl sx={{ mx: 2 }}>
+                  <InputLabel id="demo-simple-select-label">
+                    Route option
+                  </InputLabel>
+                  <Select
+                    size="small"
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={route?.summary}
+                    label="route"
+                    onChange={(e) =>
+                      setRoute(
+                        directions.filter((x) => x.summary === e.target.value)
+                      )
+                    }
+                  >
+                    {directions.map((opt) => (
+                      <MenuItem key={opt.summary} value={opt.summary}>
+                        Option one ({opt.summary})
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              )}
+
               <div style={{ display: "none" }}>
                 <PrintDirections ref={componentRef}>
                   <Typography variant="body1" sx={{ fontSize: "20px" }}>
-                    {directions?.legs[0].start_address} -{" "}
-                    {directions?.legs[0].end_address}
+                    {route?.legs[0].start_address} -{" "}
+                    {route?.legs[0].end_address}
                   </Typography>
                   <Typography variant="body2" sx={{ fontSize: "18px" }}>
-                    {directions?.legs[0].distance.text} | ~
-                    {directions?.legs[0].duration.text}
+                    {route?.legs[0].distance.text} | ~
+                    {route?.legs[0].duration.text}
                   </Typography>
                   <ol>
                     {directions.legs[0].steps.map(({ instructions }) => (
