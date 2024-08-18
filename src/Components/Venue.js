@@ -277,7 +277,7 @@ const Venue = () => {
                     label="route"
                     onChange={(e) =>
                       setRoute(
-                        directions.filter((x) => x.summary === e.target.value)
+                        directions.find((x) => x.summary === e.target.value)
                       )
                     }
                   >
