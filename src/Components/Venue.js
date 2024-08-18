@@ -11,6 +11,10 @@ import {
   TextField,
   Button,
   Alert,
+  Select,
+  FormControl,
+  InputLabel,
+  MenuItem,
 } from "@mui/material";
 import queryString from "query-string";
 import DirectionsTransitIcon from "@mui/icons-material/DirectionsTransit";
@@ -82,8 +86,12 @@ const TabsContainer = styled(Box)`
   display: flex;
 }`}
 `;
+
+const venueId = "ChIJcVSt6kVNekgRHE3N1a-NwpE";
+const stanneylandsId = "ChIJ_0K7iMGve0gRsDirtVYcrwQ";
+
 const defaultQs = {
-  q: "place_id:ChIJcVSt6kVNekgRHE3N1a-NwpE",
+  q: `place_id:${venueId}`,
 };
 
 const Venue = () => {
@@ -110,6 +118,7 @@ const Venue = () => {
   };
   const [directions, setDirections] = useState();
   const [loading, setLoading] = useState(true);
+  const [destination, setDestination] = useState(venueId);
 
   if (!isLoaded) {
     return null;
@@ -123,10 +132,10 @@ const Venue = () => {
     setSearchValue("");
     setMapUrl("https://www.google.com/maps/embed/v1/place");
     setMapQueryString({
-      q: "place_id:ChIJcVSt6kVNekgRHE3N1a-NwpE",
+      q: `place_id:${venueId}`,
     });
   };
-  console.log(directions);
+
   return (
     <>
       <Card
@@ -153,7 +162,7 @@ const Venue = () => {
           <Alert severity="info" sx={{ mb: 2 }}>
             Please note: the venue is <b>card only</b> and does not accept cash.
           </Alert>
-          <Typography gutterBottom>
+          <Typography sx={{ mb: 2 }}>
             Enter your address or postcode below to see and generate printable
             directions:
           </Typography>
@@ -172,6 +181,20 @@ const Venue = () => {
               size="small"
               sx={{ mr: 3 }}
             />
+            <FormControl sx={{ mr: 3 }}>
+              <InputLabel id="demo-simple-select-label">Destination</InputLabel>
+              <Select
+                size="small"
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={destination}
+                label="destination"
+                onChange={(e) => setDestination(e.target.value)}
+              >
+                <MenuItem value={venueId}>The venue</MenuItem>
+                <MenuItem value={stanneylandsId}>Stanneylands</MenuItem>
+              </Select>
+            </FormControl>
             <Button
               sx={{ height: "40px", mr: 1 }}
               size="small"
@@ -180,7 +203,7 @@ const Venue = () => {
               onClick={async () => {
                 const opts = {
                   origin: searchValue,
-                  destination: { placeId: "ChIJcVSt6kVNekgRHE3N1a-NwpE" },
+                  destination: { placeId: venueId },
                   travelMode: window.google.maps.TravelMode.DRIVING,
                   unitSystem: window.google.maps.UnitSystem.IMPERIAL,
                 };
@@ -194,7 +217,7 @@ const Venue = () => {
                 setMapUrl("https://www.google.com/maps/embed/v1/directions");
                 setMapQueryString({
                   origin: searchValue,
-                  destination: "place_id:ChIJcVSt6kVNekgRHE3N1a-NwpE",
+                  destination: `place_id:${destination}`,
                 });
               }}
               disabled={!searchValue || searchValue === ""}
