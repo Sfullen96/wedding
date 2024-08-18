@@ -15,6 +15,8 @@ import {
   FormControl,
   InputLabel,
   MenuItem,
+  FormControlLabel,
+  Checkbox,
 } from "@mui/material";
 import queryString from "query-string";
 import DirectionsTransitIcon from "@mui/icons-material/DirectionsTransit";
@@ -119,6 +121,7 @@ const Venue = () => {
   const [directions, setDirections] = useState();
   const [loading, setLoading] = useState(true);
   const [destination, setDestination] = useState(venueId);
+  const [avoidMotorways, setAvoidMotorways] = useState(false);
 
   if (!isLoaded) {
     return null;
@@ -195,6 +198,16 @@ const Venue = () => {
                 <MenuItem value={stanneylandsId}>Stanneylands</MenuItem>
               </Select>
             </FormControl>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={avoidMotorways}
+                  onChange={(e) => setAvoidMotorways(e.target.checked)}
+                />
+              }
+              label="Avoid motorways?"
+            />
+
             <Button
               sx={{ height: "40px", mr: 1 }}
               size="small"
@@ -206,6 +219,8 @@ const Venue = () => {
                   destination: { placeId: destination },
                   travelMode: window.google.maps.TravelMode.DRIVING,
                   unitSystem: window.google.maps.UnitSystem.IMPERIAL,
+                  provideRouteAlternatives: true,
+                  avoidHighways: avoidMotorways,
                 };
 
                 const service = new window.google.maps.DirectionsService();
