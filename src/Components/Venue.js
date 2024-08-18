@@ -274,16 +274,16 @@ const Venue = () => {
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={route?.summary}
-                    label="route"
+                    label="Route option"
                     onChange={(e) =>
                       setRoute(
                         directions.find((x) => x.summary === e.target.value)
                       )
                     }
                   >
-                    {directions.map((opt) => (
+                    {directions.map((opt, index) => (
                       <MenuItem key={opt.summary} value={opt.summary}>
-                        Option one ({opt.summary})
+                        Option {index + 1} ({opt.summary})
                       </MenuItem>
                     ))}
                   </Select>
