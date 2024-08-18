@@ -17,6 +17,7 @@ import {
   MenuItem,
   FormControlLabel,
   Checkbox,
+  Grid,
 } from "@mui/material";
 import queryString from "query-string";
 import DirectionsTransitIcon from "@mui/icons-material/DirectionsTransit";
@@ -170,87 +171,100 @@ const Venue = () => {
             Enter your address or postcode below to see and generate printable
             directions:
           </Typography>
-          <Box display="flex" flexDirection="row" alignItems="center" mb={2}>
-            <TextField
-              name="address"
-              value={searchValue}
-              label="Address or postcode"
-              onChange={(e) => {
-                setSearchValue(e.target.value);
+          <Grid container spacing={2} sx={{ mb: 1.5 }}>
+            <Grid item xs={12} md={6}>
+              <TextField
+                fullWidth
+                name="address"
+                value={searchValue}
+                label="Address or postcode"
+                onChange={(e) => {
+                  setSearchValue(e.target.value);
 
-                if (e.target.value === "") {
-                  reset();
-                }
-              }}
-              size="small"
-              sx={{ mr: 3 }}
-            />
-            <FormControl sx={{ mr: 3 }}>
-              <InputLabel id="demo-simple-select-label">Destination</InputLabel>
-              <Select
+                  if (e.target.value === "") {
+                    reset();
+                  }
+                }}
                 size="small"
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={destination}
-                label="destination"
-                onChange={(e) => setDestination(e.target.value)}
+                sx={{ mr: 3 }}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <FormControl sx={{ mr: 3 }} fullWidth>
+                <InputLabel id="demo-simple-select-label">
+                  Destination
+                </InputLabel>
+                <Select
+                  size="small"
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={destination}
+                  label="destination"
+                  onChange={(e) => setDestination(e.target.value)}
+                >
+                  <MenuItem value={venueId}>Styal Lodge</MenuItem>
+                  <MenuItem value={stanneylandsId}>Stanneylands hotel</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={avoidMotorways}
+                    onChange={(e) => setAvoidMotorways(e.target.checked)}
+                  />
+                }
+                label="Avoid motorways?"
+              />
+            </Grid>
+            <Grid item xs={12} md={6} sx={{ mb: 3, textAlign: "right" }}>
+              <Button
+                sx={{ height: "40px", mr: 1 }}
+                size="small"
+                variant="contained"
+                color="primary"
+                onClick={async () => {
+                  const opts = {
+                    origin: searchValue,
+                    destination: { placeId: destination },
+                    travelMode: window.google.maps.TravelMode.DRIVING,
+                    unitSystem: window.google.maps.UnitSystem.IMPERIAL,
+                    provideRouteAlternatives: true,
+                    avoidHighways: avoidMotorways,
+                  };
+
+                  const service = new window.google.maps.DirectionsService();
+
+                  const res = await service.route(opts);
+                  console.log(res);
+                  setDirections(res.routes);
+                  setRoute(res.routes[0]);
+
+                  setMapUrl("https://www.google.com/maps/embed/v1/directions");
+                  setMapQueryString({
+                    origin: searchValue,
+                    destination: `place_id:${destination}`,
+                  });
+                }}
+                disabled={!searchValue || searchValue === ""}
               >
-                <MenuItem value={venueId}>The venue</MenuItem>
-                <MenuItem value={stanneylandsId}>Stanneylands</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={avoidMotorways}
-                  onChange={(e) => setAvoidMotorways(e.target.checked)}
-                />
-              }
-              label="Avoid motorways?"
-            />
+                Search
+              </Button>
+              <Button
+                sx={{ height: "40px" }}
+                size="small"
+                variant="outlined"
+                color="secondary"
+                onClick={reset}
+              >
+                Clear
+              </Button>
+            </Grid>
+          </Grid>
 
-            <Button
-              sx={{ height: "40px", mr: 1 }}
-              size="small"
-              variant="contained"
-              color="primary"
-              onClick={async () => {
-                const opts = {
-                  origin: searchValue,
-                  destination: { placeId: destination },
-                  travelMode: window.google.maps.TravelMode.DRIVING,
-                  unitSystem: window.google.maps.UnitSystem.IMPERIAL,
-                  provideRouteAlternatives: true,
-                  avoidHighways: avoidMotorways,
-                };
-
-                const service = new window.google.maps.DirectionsService();
-
-                const res = await service.route(opts);
-                console.log(res);
-                setDirections(res.routes);
-                setRoute(res.routes[0]);
-
-                setMapUrl("https://www.google.com/maps/embed/v1/directions");
-                setMapQueryString({
-                  origin: searchValue,
-                  destination: `place_id:${destination}`,
-                });
-              }}
-              disabled={!searchValue || searchValue === ""}
-            >
-              Search
-            </Button>
-            <Button
-              sx={{ height: "40px" }}
-              size="small"
-              variant="outlined"
-              color="secondary"
-              onClick={reset}
-            >
-              Clear
-            </Button>
-          </Box>
           {searchValue && directions && (
             <>
               <Button
