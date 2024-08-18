@@ -203,7 +203,7 @@ const Venue = () => {
               onClick={async () => {
                 const opts = {
                   origin: searchValue,
-                  destination: { placeId: venueId },
+                  destination: { placeId: destination },
                   travelMode: window.google.maps.TravelMode.DRIVING,
                   unitSystem: window.google.maps.UnitSystem.IMPERIAL,
                 };
